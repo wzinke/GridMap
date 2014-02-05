@@ -2,8 +2,13 @@
 ##   Use a bubble plot to visualize the number of penetrations
 ##   that occurred for each hole in an electrode grid.
 ##
-##     
-##   (c) wolf zinke (Feb. 2014)
+##
+##   (c) wolf zinke (Feb. 2014) - Electrode Grid Tools
+##
+##   TODO: - Add a representation for a subarea of
+##           grid holes that are recorded from
+##         - Add a color code in addition to the area to represent
+##           the frequency of recordings
 ##
 ##########################################################################
 
@@ -22,7 +27,7 @@ GridMap = function(MLloc, APloc, grid_rad=7, hemi='R', grid_type='crist72', titl
     }
 
     # define grid hole coordinates
-    GridLayout(hole_rad=min_rad, grid_rad=grid_rad, hemi=hemi)  # needs to be sourced first
+    GridLayout(hole_rad=min_rad, grid_rad=grid_rad, hemi=hemi, titl=titl)  # needs to be sourced first
 
     # combine coordinates to unique identifiers
     got_coor = is.finite(APloc) & is.finite(MLloc)
@@ -46,12 +51,16 @@ GridMap = function(MLloc, APloc, grid_rad=7, hemi='R', grid_type='crist72', titl
     # draw circles scaled according to the number of penetrations
     symbols (MLvals, APvals, circles=radii, add=TRUE, inches=FALSE , bg="black", fg='black',lwd=1.5)
 
-    szpos = penecount >=  max(penecount)/10  # avoid writing numbers into small circles
+    szpos = penecount >=  max(penecount)/5  # avoid writing numbers into small circles
     text(MLvals[szpos], APvals[szpos], labels=as.character(penecount[szpos]), col="white", cex=0.8)
 
     # create a legend for circle sizes
     # quick & dirty determination of legend sizes (should be improved some day)
-    chose_steps = 1:50
+    if(max(penecount) < 30){
+        chose_steps = seq(from=2,by=5,to=100)
+    }else{
+        chose_steps = seq(from=5,by=5,to=100)
+    }
     num_step = (max(penecount)/chose_steps)
     use_step = chose_steps[abs(num_step-5)==min(abs(num_step-5))]
     refsteps = seq(from=use_step,to=max(penecount),by=use_step)

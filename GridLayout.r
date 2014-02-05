@@ -2,17 +2,17 @@
 ##   Create a layout scheme for an electrode grid.
 ##
 ##
-##   (c) wolf zinke (Feb. 2014)
+##   (c) wolf zinke (Feb. 2014) - Electrode Grid Tools
 ##
 ##
 ##  ToDo:  - Use other layouts in addition to the crist grid with 72 holes
 ##
 ##########################################################################
 
-GridLayout = function(grid_rad=7, hole_rad=0.4, hemi='R', grid_type='crist72', filename=NULL)
+GridLayout = function(grid_rad=7, hole_rad=0.4, hemi='R', grid_type='crist72', titl=NULL, filename=NULL)
 {
     if(!is.null(filename)){
-        postscript(file=filename , pointsize = 16, ,width = 0.39*30, height = 0.39*30,paper='special', horizontal=F) }
+        postscript(file=filename , pointsize = 14, ,width = 0.39*25, height = 0.39*25,paper='special', horizontal=F) }
 
     # create tick mark labels (quick & dirty)
     gridvec = -grid_rad:grid_rad
@@ -44,17 +44,17 @@ GridLayout = function(grid_rad=7, hole_rad=0.4, hemi='R', grid_type='crist72', f
     if(grid_type == 'crist72'){
         for(i in grid_pos){
             for(j in grid_pos){
-            if(i^2+j^2 < 7.5^2){
+            if(i^2+j^2 < (grid_rad+0.5)^2){
                 grid_x = c(grid_x, i)
                 grid_y = c(grid_y, j)
         }}}
     }else{ stop("Other layout options not implemented yet!") }
 
     # plot chamber and grid
-    plot(0,0,asp=1, xlim=plot_range, ylim=plot_range, type='n', axes = T, xlab = "medio-lateral axis", ylab = 'anterio-posterior axis', bty="n", xaxs='i', yaxs='i', yaxt="n", xaxt="n")
+    plot(0,0,asp=1, xlim=plot_range, ylim=plot_range, type='n', axes = T, xlab = "medio-lateral axis", ylab = 'anterio-posterior axis', bty="n", xaxs='i', yaxs='i', yaxt="n", xaxt="n", main=titl)
 
-    axis(1, at=gridvec,labels=MLlbl)
-    axis(2, at=gridvec,labels=APlbl)
+    axis(1, at=gridvec,labels=MLlbl, cex.axis=0.8)
+    axis(2, at=gridvec,labels=APlbl, cex.axis=0.8)
 
     lines(x=c(0, 0), y=c(-odia, odia), col='lightgrey', lty=1, lwd=1)
     lines(x=c(-odia, odia), y=c(0, 0), col='lightgrey', lty=1, lwd=1)

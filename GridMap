@@ -9,37 +9,74 @@
 Usage() {
 cat << EOF
 
-    Usage: $0 <> [options]
+    Usage: $0 <coorfile> [options]
+
+          <coorfile> is a ascii text file that contains grid coordinates.
+                     Each row corresponds to one coordinate (space delimined)
+                     The first column represents M/L coordinates, the second
+                     column represents A/P coordinates. No header line is used
+                     in this file.
 
     OPTIONS:
-            -
+            -o     output name of the data file (currently this is an *.eps file)
+            -l     left hemisphere (default is right), flips the ML-axis
+            -rad   radius in number of grid holes (default is 7 -> 72 holes)
+            -typ   layout type, currently only 'crist72' is implemented
+            -ttl   plot title
+            -h     display this help information
 
             ###########################################################
-            ##   (c) wolf zinke (2014) - part of the MaFIA toolbox   ##
-            ##         > MAcaque Functional Image Analysis <         ##
+            ##   (c) wolf zinke (2014) - Electrode Grid Tools        ##
             ##            Licensed under the MIT license             ##
             ###########################################################
+
 
 
 EOF
 exit 1
 
 }
- 
 
 if [ $# -lt 1 ]; then
     Usage
 else
-    arg1=$1;
+    coorfile=$1
     shift
 fi
- 
+
+# TODO: Interprete specifications such as M3, P5 ; L4, A4
+# TODO: Allow three column input with ML-coordinate, AP-coordinate, and penetration count
+# TODO: Make the script fail & fool proof
+
+
 #__________________________________________________________________________________________#
+
+# set default values
+hemi='R'
+grid_rad=7
+grid_type='crist72'
+flnm="Grid_Map.eps"
+ttlstr=""
 
 while [ $# -gt 0 ] ;
 do
     case $1 in
-           -)
+          -o)   flnm=$2
+                shift 2
+                ;;
+       -hemi)   hemi='L'
+                shift
+                ;;
+        -rad)   grid_rad=$2
+                shift 2
+                ;;
+        -typ)   grid_type=$2
+                shift 2
+                ;;
+        -ttl)   ttlstr=", titl='$2'"
+                shift 2
+                ;;
+          -l)   hemi='L'
                 shift
                 ;;
           -*)   echo "Wrong option: <$1>"
@@ -52,4 +89,9 @@ do
 done
 
 #__________________________________________________________________________________________#
- 
+
+rtpath=$(dirname `which $0`)
+
+echo "source('$rtpath/GridLayout.r') ; source('$rtpath/GridMap.r') ; coor=read.table('$coorfile', header=FALSE) ; GridMap(coor\$V1, coor\$V2, grid_rad=$grid_rad, hemi='$hemi', grid_type='$grid_type', filename='$flnm' $ttlstr) " | R --vanilla --slave
+
+

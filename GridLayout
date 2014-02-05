@@ -9,37 +9,62 @@
 Usage() {
 cat << EOF
 
-    Usage: $0 <> [options]
+    Usage: $0 [options]
 
     OPTIONS:
-            -
+            -o     output name of the data file (currently this is an *.eps file)
+            -l     left hemisphere (default is right), flips the ML-axis
+            -rad   radius in number of grid holes (default is 7 -> 72 holes)
+            -typ   layout type, currently only 'crist72' is implemented
+            -g     radious of the grid hole (0 < h < 0.5 )
+            -ttl   plot title
+            -h     display this help information
 
             ###########################################################
-            ##   (c) wolf zinke (2014) - part of the MaFIA toolbox   ##
-            ##         > MAcaque Functional Image Analysis <         ##
+            ##   (c) wolf zinke (2014) - Electrode Grid Tools        ##
             ##            Licensed under the MIT license             ##
             ###########################################################
+
 
 
 EOF
 exit 1
 
 }
- 
 
-if [ $# -lt 1 ]; then
-    Usage
-else
-    arg1=$1;
-    shift
-fi
- 
+
 #__________________________________________________________________________________________#
+
+# set default values
+hemi='R'
+grid_rad=7
+hole_rad=0.4
+grid_type='crist72'
+flnm="Grid_Layout.eps"
+ttlstr=""
 
 while [ $# -gt 0 ] ;
 do
     case $1 in
-           -)
+          -o)   flnm=$2
+                shift 2
+                ;;
+       -hemi)   hemi='L'
+                shift
+                ;;
+        -rad)   grid_rad=$2
+                shift 2
+                ;;
+        -typ)   grid_type=$2
+                shift 2
+                ;;
+        -ttl)   ttlstr=", titl='$2'"
+                shift 2
+                ;;
+          -g)   hole_rad=$2
+                shift 2
+                ;;
+          -l)   hemi='L'
                 shift
                 ;;
           -*)   echo "Wrong option: <$1>"
@@ -52,4 +77,11 @@ do
 done
 
 #__________________________________________________________________________________________#
- 
+
+rtpath=$(dirname `which $0`)
+
+echo "source('$rtpath/GridLayout.r') ; GridLayout(grid_rad=$grid_rad, hole_rad=$hole_rad, hemi='$hemi', grid_type='$grid_type', filename='$flnm' $ttlstr) " | R --vanilla --slave
+
+
+
+
