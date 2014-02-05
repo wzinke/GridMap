@@ -8,16 +8,20 @@ The R-scripts require an installation of the R package (http://www.r-project.org
 In addation to the R-functions, BASH scripts are provided as simple wrapper to call the tools from the command line. Images are written in eps format to allow an easy editing with image processing software such as Inkscape (http://www.inkscape.org/).
 
 To create a bare grid layout from the command line, use for example:
+
     ./GridLayout  -ttl "bare Grid" -g 0.35 -o example_GridLayout.eps
 
 To create a map of penetration counts from the command line, use for example:
+
     ./GridMap testlocations_small.dat -ttl "random locations" -o example_GridMap.eps -l
 
 Convert the eps files to more handy image formats with the `convert` tool (ImageMagick is required for this):
+
     convert  example_GridLayout.eps example_GridLayout.png
     convert  example_GridMap.eps example_GridMap.png
 
 Usage for the grid layout from the command line"
+
     Usage: GridLayout [options]
 
     OPTIONS:
@@ -30,6 +34,7 @@ Usage for the grid layout from the command line"
             -h     display this help information
 
 Usage to plot the number of penetrations:
+
     Usage: GridMap <coorfile> [options]
 
           <coorfile> is a ascii text file that contains grid coordinates.
