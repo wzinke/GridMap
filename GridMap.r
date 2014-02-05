@@ -57,7 +57,7 @@ GridMap = function(MLloc, APloc, grid_rad=7, hemi='R', grid_type='crist72', titl
     # create a legend for circle sizes
     # quick & dirty determination of legend sizes (should be improved some day)
     if(max(penecount) < 30){
-        chose_steps = seq(from=2,by=5,to=100)
+        chose_steps = seq(from=2,by=2,to=10)
     }else{
         chose_steps = seq(from=5,by=5,to=100)
     }
