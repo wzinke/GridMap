@@ -62,7 +62,7 @@ GridMap = function(MLloc, APloc, grid_rad=7, hemi='R', grid_type='crist72', titl
         chose_steps = seq(from=5,by=5,to=100)
     }
     num_step = (max(penecount)/chose_steps)
-    use_step = chose_steps[abs(num_step-5)==min(abs(num_step-5))]
+    use_step = chose_steps[abs(num_step-6)==min(abs(num_step-6))]
     refsteps = seq(from=use_step,to=max(penecount),by=use_step)
     refsz = sqrt(refsteps)
     refsz = (diff(size.range)*(refsz - min(radarea))) / diff(range(radarea)) + size.range[1] # normalize area
