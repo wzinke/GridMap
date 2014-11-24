@@ -61,3 +61,5 @@ The second example shows an overlaid bubble plot representing the number of pene
 
 The scripts are released under the MIT licence, see MIT-LICENSE.txt for details. I do not guarantee that they are free of bugs, on the contrary, I am happy for any bug reports or comments of possible improvements.
 
+This Github repository is associated with this DOI: [![DOI](https://zenodo.org/badge/4883/wzinke/GridMap.png)](http://dx.doi.org/10.5281/zenodo.10695)
+
