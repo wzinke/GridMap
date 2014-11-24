@@ -3,9 +3,9 @@ GridMap
 
 Create an image for an electrode grid, and use a bubble plot to display the number of penetrations in each grid hole.
 
-The R-scripts require an installation of the R package (http://www.r-project.org/). Dowload the files and source both functions from the command window of R.
+The R-scripts require an installation of the [R package](http://www.r-project.org/). Dowload the files and source both functions from the command window of R.
 
-In addation to the R-functions, BASH scripts are provided as simple wrapper to call the tools from the command line. Images are written in eps format to allow an easy editing with image processing software such as Inkscape (http://www.inkscape.org/).
+In addition to the R-functions, BASH scripts are provided as simple wrapper to call the tools from the command line. Images are written in eps format to allow an easy editing with image processing software such as [Inkscape](http://www.inkscape.org/).
 
 To create a bare grid layout from the command line, use for example:
 
